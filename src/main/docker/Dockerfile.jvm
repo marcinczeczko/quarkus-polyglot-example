@@ -14,8 +14,16 @@
 # docker run -i --rm -p 8080:8080 quarkus/getting-started-jvm
 #
 ###
-FROM fabric8/java-jboss-openjdk8-jdk
-ENV JAVA_OPTIONS=-Dquarkus.http.host=0.0.0.0
+FROM oracle/graalvm-ce:1.0.0-rc14
+
+USER root
+
+RUN gu install R
+
+RUN mkdir -p /deployments
+
+ADD target/graph.html /deployments/graph.html
 COPY target/lib/* /deployments/lib/
 COPY target/*-runner.jar /deployments/app.jar
-ENTRYPOINT [ "/deployments/run-java.sh" ]
+ENV GRAPH_TEMPLATE_PATH /deployments/graph.html
+CMD [ "java", "-jar", "/deployments/app.jar" ]

@@ -46,6 +46,31 @@
   <build>
     <plugins>
       <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-page-html</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+              <resources>
+                <resource>
+                  <filtering>true</filtering><!-- if it is neccessary -->
+                  <directory>src/main/resources</directory><!-- from -->
+                  <targetPath>${project.build.directory}</targetPath><!-- to -->
+                  <includes><!-- what -->
+                    <include>graph.html</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
         <version>${quarkus.version}</version>
@@ -89,7 +114,9 @@
                 </goals>
                 <configuration>
                   <enableHttpUrlHandler>true</enableHttpUrlHandler>
-                  <additionalBuildArgs>--language:R</additionalBuildArgs>
+                  <additionalBuildArgs>
+                    <additionalBuildArg>--language:R</additionalBuildArg>
+                  </additionalBuildArgs>
                 </configuration>
               </execution>
             </executions>
