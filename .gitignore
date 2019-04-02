@@ -1,0 +1,8 @@
+.idea
+.java-version
+*.iml
+*.iws
+*.log
+*.svg
+
+target/
