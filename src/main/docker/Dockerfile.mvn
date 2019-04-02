@@ -1,0 +1,3 @@
+FROM quay.io/quarkus/centos-quarkus-maven
+
+RUN gu install R

@@ -40,11 +40,21 @@ docker run -i --rm -p 8080:8080 quarkus-sample/polyglot-jvm
 ```
 
 ### Run as native docker image
-TBD - TODO: modify base image to install R lang.
+Create a builder image
+```
+docker build -f src/main/docker/Dockerfile.mvn -t quarkus/graalvm-rc14-rlang .
+```
+
+Build a native image using docker container
 
 ```
-mvn package -Pnative -Dnative-image.docker-build=true
-docker run -i --rm -p 8080:8080 quarkus-sample/polyglot
+mvn package -Pnative -Dnative-image.docker-build=quarkus/graalvm-rc14-rlang
+```
+
+Finally, build a target image with compiled native executable and run it
+```
+docker build -f src/main/docker/Dockerfile.native -t quarkus-sample/polyglot-native .
+docker run -i --rm -p 8080:8080 quarkus-sample/polyglot-native
 ```
 
 ### How to access
