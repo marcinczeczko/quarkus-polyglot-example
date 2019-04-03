@@ -40,7 +40,7 @@ docker run -i --rm -p 8080:8080 quarkus-sample/polyglot-jvm
 ```
 
 ### Run as native docker image
-Create a builder image
+Create a builder image with installed support for R lang
 ```
 docker build -f src/main/docker/Dockerfile.mvn -t quarkus/graalvm-rc14-rlang .
 ```
