@@ -5,7 +5,7 @@ This repository contains a naive implementation that runs R script thanks to the
 ## Prerequisites
 
 * [Maven 3.5.3+](https://maven.apache.org/install.html)
-* [GraalVM RC14+ CE](https://github.com/oracle/graal/releases)
+* [GraalVM 19.1.1 CE](https://github.com/oracle/graal/releases)
 
 ## How to run
 
@@ -16,9 +16,11 @@ export GRAALVM_HOME=<path to your graalvm>
 export JAVA_HOME=${GRAALVM_HOME}
 export PATH=$JAVA_HOME/bin:$PATH
 ```
-Install R language support for GraalVM
+Install native image & R language support for GraalVM
 ```
+gu install native-image
 gu install R
+export R_HOME=${GRAALVM_HOME}/jre/languages/R
 ```
 
 ### Run as java runner
@@ -37,24 +39,6 @@ mvn package -Pnative
 ```
 docker build -f src/main/docker/Dockerfile.jvm -t quarkus-sample/polyglot-jvm .
 docker run -i --rm -p 8080:8080 quarkus-sample/polyglot-jvm
-```
-
-### Run as native docker image
-Create a builder image with installed support for R lang
-```
-docker build -f src/main/docker/Dockerfile.mvn -t quarkus/graalvm-rc14-rlang .
-```
-
-Build a native image using docker container
-
-```
-mvn package -Pnative -Dnative-image.docker-build=quarkus/graalvm-rc14-rlang
-```
-
-Finally, build a target image with compiled native executable and run it
-```
-docker build -f src/main/docker/Dockerfile.native -t quarkus-sample/polyglot-native .
-docker run -i --rm -p 8080:8080 quarkus-sample/polyglot-native
 ```
 
 ### How to access

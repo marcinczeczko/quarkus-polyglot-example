@@ -14,10 +14,11 @@
 # docker run -i --rm -p 8080:8080 quarkus/getting-started-jvm
 #
 ###
-FROM oracle/graalvm-ce:1.0.0-rc14
+FROM oracle/graalvm-ce:19.1.1
 
 USER root
 
+RUN gu install native-image
 RUN gu install R
 
 RUN mkdir -p /deployments
